@@ -1,6 +1,6 @@
 # GitHub Repository Searcher
 
-A Java 21 and Spring Boot REST API that searches GitHub repositories, saves the results to PostgreSQL, and lets you filter and sort the saved repositories. Neon can host the PostgreSQL database. There is no web UI; use Postman, `curl`, or another HTTP client.
+A Java 21 and Spring Boot REST API that searches GitHub repositories, saves the results to PostgreSQL, and lets you filter and sort the saved repositories. Neon can host the PostgreSQL database. Swagger UI provides interactive API documentation; you can also use Postman, `curl`, or another HTTP client.
 
 ## Features
 
@@ -8,6 +8,7 @@ A Java 21 and Spring Boot REST API that searches GitHub repositories, saves the 
 - Save the results in PostgreSQL. GitHub's repository ID is the primary key, so a later search updates a repository already stored.
 - List saved repositories, optionally filtered by language and minimum stars.
 - Sort saved repositories by stars, forks, or last-updated time.
+- Explore and try the API from Swagger UI with automatically generated OpenAPI documentation.
 - Apply the database schema automatically at application startup with Flyway.
 - Validate request fields and validate the database schema against the JPA entity.
 
@@ -48,6 +49,8 @@ docker run -d --name github-repository-searcher --env-file .env -p 8080:8080 git
 ```
 
 The API is available at `http://localhost:8080`.
+
+Open the interactive API documentation at [`http://localhost:8080/swagger-ui.html`](http://localhost:8080/swagger-ui.html). The generated OpenAPI JSON is available at `http://localhost:8080/v3/api-docs`.
 
 View application logs:
 
@@ -96,6 +99,8 @@ Base URL:
 ```text
 http://localhost:8080
 ```
+
+You can also browse the available endpoints and send requests from [Swagger UI](http://localhost:8080/swagger-ui.html) while the application is running.
 
 ### Search GitHub and save results
 
