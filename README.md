@@ -23,6 +23,21 @@ GitHub API search uses its default page size (currently 30 results). Pagination 
 
 Docker packages and runs the application; Neon hosts the database. You can run the application directly with Maven instead of Docker.
 
+## Deploy publicly with Render
+
+The project includes a Render Blueprint in `render.yaml` and is configured to listen on Render's `PORT` environment variable. Render builds and runs the existing Dockerfile; Neon remains the database.
+
+1. Push the project, including `render.yaml`, to a GitHub repository accessible to your Render account.
+2. In Render, choose **New** → **Blueprint**, connect that repository, and apply the `render.yaml` configuration.
+3. In the Render service's environment settings, provide these values:
+   - `DATABASE_URL`: `jdbc:postgresql://<neon-host>/neondb?sslmode=require&channelBinding=require`
+   - `DATABASE_USERNAME`: your Neon database role
+   - `DATABASE_PASSWORD`: the current password for that role
+4. Save the settings and wait for the deployment and health check to succeed.
+5. Render assigns a public service URL, such as `https://<service-name>.onrender.com`. Open `<service-url>/swagger-ui.html` for the interactive API docs or `<service-url>/api/github/repositories` to list stored repositories.
+
+Do not commit database credentials to `render.yaml` or GitHub. Enter them only in Render's environment settings. Do not copy a Neon URL containing `user` or `password` query parameters; keep credentials in their separate environment variables. Render injects `PORT` automatically. The Blueprint uses Render's free service plan, which can sleep when idle and take longer to respond to the first request after inactivity.
+
 ## Configure the database
 
 In Neon, open your project's connection details and copy the PostgreSQL host and database role. Create a local `.env` file in the project root:

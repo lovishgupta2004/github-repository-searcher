@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: github-repository-searcher
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/github/repositories
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
