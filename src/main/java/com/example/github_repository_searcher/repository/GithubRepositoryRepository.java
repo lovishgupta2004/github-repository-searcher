@@ -11,7 +11,7 @@ import java.util.List;
 public interface GithubRepositoryRepository extends JpaRepository<GithubRepositoryEntity, Long> {
     @Query("""
             SELECT repository FROM GithubRepositoryEntity repository
-            WHERE (:language IS NULL OR LOWER(repository.language) = LOWER(:language))
+            WHERE (:language IS NULL OR LOWER(repository.language) = LOWER(CAST(:language AS string)))
               AND (:minStars IS NULL OR repository.stars >= :minStars)
             """)
     List<GithubRepositoryEntity> findByFilters(
